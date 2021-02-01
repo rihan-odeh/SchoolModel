@@ -1,2 +1,0 @@
-schoolmodel.Person
-schoolmodel.Gender
