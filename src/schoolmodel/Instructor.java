@@ -38,8 +38,9 @@ public class Instructor extends Person{
      * @param instructor 
      */
     public Instructor(Instructor instructor){
-        super(instructor.getId(), instructor.getFirstName(), instructor.getLastName(), instructor.getDateOfBirth(), instructor.getGender());
+        super(instructor.getId(), instructor.getName(), instructor.getDateOfBirth(), instructor.getGender());
     }
+
     /**
      * setter
      * @param lecture object to set it ti the lecture attribute
@@ -53,5 +54,8 @@ public class Instructor extends Person{
      */
     public Lecture getLecture(){
         return lecture;
+    }
+    public Sclass getSClass(){
+        return lecture.getsC();
     }
 }

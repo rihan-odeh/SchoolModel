@@ -17,18 +17,13 @@ import java.util.Date;
  * enum is for gender
  * @author ro1
  */
- enum Gender{  
-        Female,
-        Male, 
-        NotKnown
-    }
+
 public class Person {
-    private long Id;
-   private  String firstName;
-   private  String lastName;
-   private  String Name;
-   private Date DateOfBirth; 
-    Gender gender; 
+    private long id;
+
+   private  String name;
+   private Date dateOfBirth;
+   private Gender gender;
     /**
      * 
      * @param Id to be the id of this person
@@ -46,19 +41,27 @@ public class Person {
      * @param gender 
      */
    public Person(long Id, String FirstName,String LastName, Date DateOfBirth,  Gender gender ) {
-     this.Id = Id;
-     this.Name= FirstName + " " + LastName; 
+     this.id = Id;
+     this.name= FirstName + " " + LastName;
      
-     this.DateOfBirth =DateOfBirth; 
+     this.dateOfBirth =DateOfBirth;
      this.gender= gender;
    }
-   /**
+
+    public Person(long id, String name, Date dateOfBirth, Gender gender) {
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+    }
+
+    /**
     * default constructor
     */
    public Person(){
-    this.Id= 00000; 
-    this.Name= " ";
-    this.DateOfBirth = new Date(); 
+    this.id= 0;
+    this.name= " ";
+    this.dateOfBirth = new Date();
     this.gender= Gender.NotKnown;
    }
    
@@ -70,7 +73,7 @@ public class Person {
     * @param Id
     */
    public void setId(long Id){
-       this.Id = Id; 
+       this.id = Id;
        
    }
    /**
@@ -79,7 +82,7 @@ public class Person {
     * @param last name
     */
    public void setName(String first, String last){
-       this.Name = first +" " + last; 
+       this.name = first +" " + last;
       
    }
    /**
@@ -87,7 +90,7 @@ public class Person {
     * @param date of birth
     */
    public void setDate(Date date){
-       this.DateOfBirth = date; 
+       this.dateOfBirth = date;
    }
    /**
     * 
@@ -105,35 +108,22 @@ public class Person {
     * @return id
     */
    public long getId(){
-       return this.Id;  
+       return this.id;
    }
-   /**
-    * 
-    * @return first name 
-    */
-   public String getFirstName(){
-       return this.firstName; 
-   }
-   /**
-    * 
-    * @return last name
-    */
-   public String getLastName(){
-       return this.lastName; 
-   }
+
    /**
     *  
     * @return name as both first and last name
     */
    public String getName(){
-       return Name; 
+       return name;
    }
    /**
     * 
     * @return date of birth
     */
    public Date getDateOfBirth(){
-       return DateOfBirth; 
+       return dateOfBirth;
    }
    /**
     * 
@@ -147,7 +137,13 @@ public class Person {
      * @return string representation for the person with all the attributes
      */
     public String toString(){
-        return getName() + " ( is " + getGender() + " has an Id of: " + getId() + " and was born on: " + getDateOfBirth() +")"; 
+        return String.format("%10s  ", getName() + getGender() + getId() +  getDateOfBirth() );
     }
+
     
+}
+enum Gender{
+    Female,
+    Male,
+    NotKnown
 }

@@ -5,26 +5,41 @@
  */
 package schoolmodel;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author ro1 Table class, is a school sceduale with lectures and sClasses
  */
 class Table {
    private long id;
-   private Lecture lectures;
-  private  sClass sclass;
+   private ArrayList<Lecture>lectures ;
+  private Sclass sclass;
   /**
    * constructor assigns values to the attributes
    * @param id
-   * @param lecture
+   * @param lectures
    * @param sC 
    */
-   public Table (long id, Lecture lecture, sClass sC){
+   public Table (long id, ArrayList<Lecture> lectures, Sclass sC){
        this.id = id; 
-       this.lectures = lecture; 
+       this.lectures = lectures;
        this.sclass = sC;
    }
-   /**
+
+    public void setLectures(ArrayList<Lecture> lectures) {
+        this.lectures = lectures;
+    }
+
+    public Sclass getSclass() {
+        return sclass;
+    }
+
+
+    public void setSclass(Sclass sclass) {
+        this.sclass = sclass;
+    }
+    /**
     * getters
     */
    /**
@@ -38,14 +53,14 @@ class Table {
     * 
     * @return lecture in this table
     */
-    public Lecture getLectures(){
+    public ArrayList<Lecture> getLectures(){
         return lectures; 
     }
     /**
      * 
-     * @return sClass in this table
+     * @return Sclass in this table
      */
-    public sClass getSchoolClass(){
+    public Sclass getSchoolClass(){
         return sclass; 
     }
     /**
@@ -62,21 +77,22 @@ class Table {
      * 
      * @param lecture to assign it to this table class
      */
-    public void setLecture(Lecture lecture){
+    public void setLecture(ArrayList<Lecture> lecture){
         this.lectures = lecture;
+    }
+    public void addLecture(Lecture lecture){
+        lectures.add(lecture);
     }
     /**
      * 
-     * @param Sc to be the sClass of this table
+     * @param Sc to be the Sclass of this table
      */
-    public void setSClass(sClass Sc){
+    public void setSClass(Sclass Sc){
         this.sclass = Sc;
     }
     /**
      * 
      * @return a string representation of the whole table with its attributes
      */
-    public String tostring(){
-        return "The table with "+ getId() +"has a "+ lectures.getName() +" and its students are: \n " + sclass.getStudent();
-    }
+
 }

@@ -39,6 +39,6 @@ public class Admin extends Person{
      * @param admin 
      */
     public Admin(Admin admin){
-        super(admin.getId(), admin.getFirstName(), admin.getLastName(), admin.getDateOfBirth(), admin.getGender());
+        super(admin.getId(), admin.getName(), admin.getDateOfBirth(), admin.getGender());
     }
 }

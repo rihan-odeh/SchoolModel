@@ -50,10 +50,10 @@ class Book {
     }
     /**
      * 
-     * @param AuthorName assigns name to the author's name
+     * @param authorName assigns name to the author's name
      */
-    public void setAuthorName(String AuthorName){
-        this.authorName= AuthorName;
+    public void setAuthorName(String authorName){
+        this.authorName= authorName;
     }
     /**
      * 
@@ -64,10 +64,10 @@ class Book {
     }
     /**
      * 
-     * @param ReleaseYear to be the year this book was published
+     * @param releaseYear to be the year this book was published
      */
-    public void setReleaseYear(int ReleaseYear){
-        this.releaseYear = ReleaseYear;
+    public void setReleaseYear(int releaseYear){
+        this.releaseYear = releaseYear;
     }
     /**
      * getters
