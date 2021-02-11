@@ -9,7 +9,7 @@ public class Lecture { //each lecture has more than one Period, so to be put in 
     private String name;
     private Sclass sC;
     private Book book;
-    private ArrayList<Period> periods = new ArrayList<>() ;
+    private ArrayList<Period> periods = new ArrayList<>();
 
 
     /**
@@ -34,6 +34,13 @@ public class Lecture { //each lecture has more than one Period, so to be put in 
         this.sC =sC;
         this.book = book;
         addPeriod(period);
+    }
+
+    public Lecture(int id, String name, Book book, ArrayList<Period> periods) {
+        this.id = id;
+        this.name = name;
+        this.book = book;
+        this.periods = periods;
     }
 
     public int getId() {

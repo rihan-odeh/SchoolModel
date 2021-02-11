@@ -137,7 +137,7 @@ public class Person {
      * @return string representation for the person with all the attributes
      */
     public String toString(){
-        return String.format("%10s  ", getName() + getGender() + getId() +  getDateOfBirth() );
+        return String.format(" %4s", getName() + getGender() + getId() +  getDateOfBirth() );
     }
 
     

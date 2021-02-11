@@ -7,13 +7,14 @@ package schoolmodel;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 
 /**
  *
  * @author ro1 driving class to check all methods of each class
  */
-  
+
 public class SchoolModel {
 
     /**
@@ -25,15 +26,11 @@ public class SchoolModel {
          ArrayList<Double> marks = new ArrayList<>();
          marks.add(100.0);
          marks.add(98.0);
-        ArrayList<Double> marks1 = new ArrayList<>();
-        marks1.add(66.0);
-        marks1.add(92.0);
 
-        Student student1 = new Student(123,"rihan","odeh", date, Gender.Female, marks1);
-        Student student2= new Student(789, "r","o", date, Gender.Male, marks);
         ArrayList<Student> students = new ArrayList<>();
-        students.add(student1);
-        students.add(student2);
+        HashMap<Lecture, Double> marks3 = new HashMap<>();
+
+
         Book book = new Book(12321, "AAAA" , "dkmls", 154, 2001 );
         Book book1 = new Book(587, "Agggg" , "dkmls", 154, 2001 );
         ArrayList<Book> books = new ArrayList<>();
@@ -45,38 +42,84 @@ public class SchoolModel {
         ArrayList<Period> periods = new ArrayList<>();
         periods.add(period1);
         periods.add(period2);
-        Sclass sclass = new Sclass(1254,254, books,instructor ,students, 10, 'a');
+        //Sclass sclass1 = new Sclass(1254,1254, books,instructor );
+        Sclass sclass = new Sclass(1254,254, books,instructor );
+        Student student1 = new Student(123,"rihanodeh", date, Gender.Female);
+        student1.setSc(sclass);
+
+
+
+
+
+
+
+        Lecture lecture = new Lecture(1254, "Math", book, periods);
+        lecture.setsC(sclass);
+
+        Lecture lecture1 = new Lecture(5421, "Science", book, periods);
+        lecture1.setsC(sclass);
+        Lecture lecture3 = new Lecture(1254, "CS",sclass, book, periods);
+
+
+        marks3.put(lecture3, 1.0);
+        marks3.put(lecture1, 6.0);
+        marks3.put(lecture, 4.0);
+        student1.setMark(marks3);
+        student1.getAverage();
+        sclass.addStudents(student1);
+
+        Student student2= new Student(789, "r","o", date, Gender.Male, sclass);
+        sclass.addStudents(student2);
+        HashMap<Lecture, Double> marks4 = new HashMap<>();
+        marks4.put(lecture, 80.0);
+        marks4.put(lecture1, 60.0);
+        marks4.put(lecture3, 70.0);
+        student2.setMark(marks4);
+        students.add(student2);
+
+
+
+
+
+       ;
+
+        student1.setMark(marks3);
+
+        System.out.println(student1.getAverage());
+        System.out.println(student1.getCoursesMarks()); //lecture representation
+
+
+
+       students.add(student1);
+
+
+
+        student2.setCoursesMarks(lecture3, 80.0);
+       student2.setCoursesMarks(lecture1,60.0);
 
         ArrayList<Sclass> sclasses = new ArrayList<>();
         sclasses.add(sclass);
 
 
-        Lecture lecture = new Lecture(1254, "Math",sclass, book, periods);
-        Lecture lecture1 = new Lecture(5421, "Science", sclass, book, periods);
         ArrayList<Lecture> lectures = new ArrayList<>();
         lectures.add(lecture1);
         lectures.add(lecture);
         Table table = new Table(5478, lectures, sclass);
-        Sclass sclass1 = new Sclass(1254,1254, books,students,instructor );
-        sclasses.add(sclass1);
-        SchoolControl schoolControl = new SchoolControl(admin);
-        schoolControl.addClass(Level.level4,sclass);
 
+
+
+        //schoolControl.addClass(Level.level4,sclass);
+        Sclass sclass4 = new Sclass(1254,1254, books, students,instructor );
+        Sclass sclass3 = new Sclass(1254,1254, books, students,instructor );
+        //sclasses.add(sclass4);
+       // sclasses.add(sclass3);
+        SchoolControl schoolControl = new SchoolControl(admin, Level.level5,sclasses );
         schoolControl.setAdmin(admin);
         schoolControl.addInstructor(instructor);
         System.out.println(schoolControl.getAdmin());
         System.out.println(schoolControl.getInstructors());
-        System.out.println(schoolControl.getSclasses());
+
         SclassControl sclassControl = new SclassControl(1452, table, 254, books, students, instructor, admin);
-
-        sclassControl.assignBooks(books);
-        System.out.println(schoolControl.getLevel(sclass));
-        System.out.println("section = " + schoolControl.addClass(Level.level4, sclass1));
-        Sclass sclass3 = new Sclass(1254,1254, books,students,instructor );
-        System.out.println(schoolControl.addClass(Level.level4,sclass3));
-
-        SclassControl sclassControl1 = new SclassControl(sclass1);
-        schoolControl.addClass(Level.level1, sclass1);
         Instructor instructor1 = new Instructor(1, "Instructor", "a", date, Gender.NotKnown);
         Instructor instructor2 = new Instructor(2, "Instructor", "b", date, Gender.NotKnown);
         Instructor instructor3 = new Instructor(5, "Instructor", "a", date, Gender.NotKnown);
@@ -86,17 +129,26 @@ public class SchoolModel {
         instructors.add(instructor2);
         instructors.add(instructor3);
         instructors.add(instructor4);
-        SchoolControl schoolControl1= new SchoolControl(admin, sclasses, instructors);
+        sclassControl.assignBooks(books);
+        System.out.println(student1.getCourseMark(lecture1));
+
+
+
+        //System.out.println("section = " + schoolControl.addClass(Level.level4, sclass));
+        System.out.println(schoolControl.addClass(Level.level5, sclass4));
+       System.out.println(schoolControl.addClass(Level.level5, sclass3));
+       // System.out.println(sclass3.getSection());
+        SchoolControl schoolControl1= new SchoolControl(admin,  instructors);
         schoolControl.addInstructor(instructor);
         schoolControl.addInstructor(instructor2);
         schoolControl.addInstructor(instructor1);
         schoolControl.addInstructor(instructor3);
-        schoolControl.addInstructor(instructor4);
-        System.out.println(schoolControl.getInstructors().size());
+       schoolControl.addInstructor(instructor4);
+       System.out.println(schoolControl.getInstructors().size());
         sclassControl.setSchoolControl(schoolControl1);
-        System.out.println(sclassControl.getManager());
-        System.out.println(sclassControl.assignManagerAssistant());
-        System.out.println(sclass.getMarks());
+       System.out.println(sclassControl.getManager());
+       System.out.println(sclass.getHighestAve());
+      System.out.println(sclassControl.assignManagerAssistant());
 
 
 
@@ -130,11 +182,10 @@ public class SchoolModel {
 
 
 
-      
-       
 
 
-      
+
+
     }
-    
+
 }

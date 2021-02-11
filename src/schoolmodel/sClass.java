@@ -6,9 +6,10 @@
 package schoolmodel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- *
  * @author ro1 sclass class is to be a design of school class, and has some attributes
  */
 class Sclass {
@@ -16,16 +17,18 @@ class Sclass {
     private long id;
     private Table table;
     private int roomNumber;
-    private ArrayList<Book> books= new ArrayList<>();
-    private Instructor  classManager;
-    private ArrayList<Student> students= new ArrayList<>();
-    private int level;
+    private ArrayList<Book> books;
+    private Instructor classManager;
+    private ArrayList<Student> students = new ArrayList<>();
+    private Level level;
     private char section = 'a';
     private Student managerAssistant;
-    private ArrayList<Double>studentMarks = new ArrayList<>();
+    private SclassControl sclassControl = new SclassControl(this);
+    private SchoolControl schoolControl;
+    private HashMap<Student, Double> avarageOfStudents = new HashMap<>(); // average for every Student
 
 
-    public Sclass(long id, Table table, int roomNumber, ArrayList<Book> books, Instructor classManager, ArrayList<Student> students, int level, char section) {
+    public Sclass(long id, Table table, int roomNumber, ArrayList<Book> books, Instructor classManager, ArrayList<Student> students, Level level, char section) {
         this.id = id;
         this.table = table;
         this.roomNumber = roomNumber;
@@ -39,8 +42,7 @@ class Sclass {
     }
 
 
-
-    public Sclass(long id, int roomNumber, ArrayList<Book> books, Instructor classManager, ArrayList<Student> students, int level, char section) {
+    public Sclass(long id, int roomNumber, ArrayList<Book> books, Instructor classManager, ArrayList<Student> students, Level level, char section) {
         this.id = id;
         this.roomNumber = roomNumber;
         this.books = books;
@@ -52,15 +54,16 @@ class Sclass {
 
     /**
      * constructor that assigns values to the attributes
+     *
      * @param id
      * @param table
      * @param roomNumber
      * @param books
      * @param students
-     * @param classManager 
+     * @param classManager
      */
-    
-    public Sclass(long id, Table table, int roomNumber, ArrayList <Book> books, ArrayList <Student> students, Instructor classManager) {
+
+    public Sclass(long id, Table table, int roomNumber, ArrayList<Book> books, ArrayList<Student> students, Instructor classManager) {
         this.id = id;
         this.table = table;
         this.roomNumber = roomNumber;
@@ -68,46 +71,51 @@ class Sclass {
         this.students = students;
         this.classManager = classManager;
     }
+
     /**
      * copy constructor
+     *
      * @param id
      * @param roomNumber
      * @param books
      * @param students
-     * @param classManager 
+     * @param classManager
      */
-public Sclass(long id, int roomNumber, ArrayList <Book> books, ArrayList <Student> students, Instructor classManager){
-    this.id = id;
+    public Sclass(long id, int roomNumber, ArrayList<Book> books, ArrayList<Student> students, Instructor classManager) {
+        this.id = id;
         this.roomNumber = roomNumber;
         this.books = books;
         this.students = students;
         this.classManager = classManager;
-}
-    public Sclass(Sclass sclass){
-    this.id = sclass.getId();
-    this.table= sclass.getTable();
-    this.roomNumber= sclass.getRoomNumber();
-    this.books= sclass.getBook();
-    //this.students= sclass.getStudent();
-    this.classManager= sclass.getClassManager();
-    }
-    public ArrayList<Double> getMarks(){
-    for(int i = 0; i<students.size(); i++){
-        studentMarks.add(students.get(i).getAverage());
-    }
-    return studentMarks;
     }
 
+    public Sclass(Sclass sclass) {
+        this.id = sclass.getId();
+        this.table = sclass.getTable();
+        this.roomNumber = sclass.getRoomNumber();
+        this.books = sclass.getBook();
+        //this.students= sclass.getStudent();
+        this.classManager = sclass.getClassManager();
+    }
 
+    public Sclass(long id, int roomNumber, ArrayList<Book> books, Instructor classManager) {
+        this.id = id;
+
+        this.roomNumber = roomNumber;
+        this.books = books;
+        this.classManager = classManager;
+    }
 
     /**
-   * setter
-   * @param id to be id
-   */
+     * setter
+     *
+     * @param id to be id
+     */
     public void setId(long id) {
         this.id = id;
 
     }
+
     public ArrayList<Book> getBooks() {
         return books;
     }
@@ -120,16 +128,16 @@ public Sclass(long id, int roomNumber, ArrayList <Book> books, ArrayList <Studen
         this.students = students;
     }
 
-    public int getLevel() {
+    public Level getLevel() {
         return level;
     }
 
-    public void setLevel(int level) {
+    public void setLevel(Level level) {
         this.level = level;
     }
 
-    public char getSection() {
-        return section;
+    public char getSection( ) {
+        return schoolControl.getSection(this);
     }
 
     public void setSection(char section) {
@@ -140,29 +148,26 @@ public Sclass(long id, int roomNumber, ArrayList <Book> books, ArrayList <Studen
         return managerAssistant;
     }
 
-    public void setManagerAssistance(Student managerAssistance) {
-        this.managerAssistant = managerAssistance;
-    }
 
-/**
- * 
- * @param table to be the table of this class
- */
+
+    /**
+     * @param table to be the table of this class
+     */
     public void setTable(Table table) {
         this.table = table;
     }
-/**
- * 
- * @param roomnumber in this Sclass
- */
+
+    /**
+     * @param roomnumber in this Sclass
+     */
     public void setRoomNumber(int roomnumber) {
         this.roomNumber = roomNumber;
 
     }
-/**
- * 
- * @param books to be books in the SClass
- */
+
+    /**
+     * @param books to be books in the SClass
+     */
     public void setBooks(ArrayList<Book> books) {
         this.books = new ArrayList<>(books);
 
@@ -170,80 +175,103 @@ public Sclass(long id, int roomNumber, ArrayList <Book> books, ArrayList <Studen
 
     /**
      * method to add students to the list
+     *
      * @param book
      */
-   public void addBook(Book book){
+    public void addBook(Book book) {
         books.add(book);
-   }
- /*
- * @param Student to be student in this class
- */
-    public void addStudents(Student student){
+    }
+
+    /*
+     * @param Student to be student in this class
+     */
+    public void addStudents(Student student) {
         students.add(student);
     }
 
-/**
- * 
- * @param ClassManager to be the instructor of this Sclass
- */
-    public void setClassManager(Instructor ClassManager) {
-        this.classManager = classManager;
+    /**
+     *
+     */
+    public void setClassManager() {
+        this.classManager = sclassControl.getManager();
 
     }
     /**
      *  getters
-     * 
+     *
      */
-/**
- * 
- * @return id of the Sclass
- */
-    public long getId(){
-        return id; 
-    }
     /**
-     * 
+     * @return id of the Sclass
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
      * @return table in this Sclass
      */
-    public Table getTable(){
+    public Table getTable() {
         return this.table;
     }
+
     /**
-     * 
-     * @return room number 
+     * @return room number
      */
-    public int getRoomNumber(){
+    public int getRoomNumber() {
         return this.roomNumber;
     }
+
     /**
-     * 
      * @return book assigned to this Sclass
      */
-public ArrayList<Book> getBook(){
-    return books; 
-}
+    public ArrayList<Book> getBook() {
+        return books;
+    }
 /**
- *  
+ *
  * @return student in this class
  */
 
 
-/**
- * 
- * @return instructor of this class
- */
-public Instructor getClassManager() {
-    return classManager;
+    /**
+     * @return instructor of this class
+     */
+    public Instructor getClassManager() {
+        return classManager;
+    }
+
+
+    public double getStudentAverage(Student student) {
+
+        return avarageOfStudents.get(student);
+    }
+
+    public void setStudentsAverages() { //add student with his\her ave
+        avarageOfStudents = new HashMap<>();
+        for (int i = 0; i<students.size(); i++) {
+            avarageOfStudents.put(students.get(i),students.get(i).getAverage());
+        }
+
+
+    }
+
+    public HashMap<Student, Double> getStudentsAverages() {
+        return avarageOfStudents;
+    }
+
+    public Double getHighestAve() {
+
+        Map.Entry<Student, Double> max =null;
+       setStudentsAverages();
+        for (Map.Entry<Student, Double> entry : avarageOfStudents.entrySet()) {
+            if (max==null ||entry.getValue().compareTo(max.getValue()) > 0)
+                max = entry;
+        }
+
+        return max.getValue();
+    }
+    public String  toString(){
+        return this.avarageOfStudents+ " " + this.id;
+    }
 }
 
-
-
-
-/**
- * 
- * @return string representation of Sclass
- *
-public String toString(){
-    return "This class "+ getId() +" \n is in : " +getRoomNumber()+ "\n Students in this class are:\n "+getStudent()+"\n class Manager is: \n"+ getClassManager();*/
-
-}

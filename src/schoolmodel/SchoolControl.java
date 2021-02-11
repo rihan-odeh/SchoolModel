@@ -1,4 +1,5 @@
 package schoolmodel;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -6,21 +7,22 @@ import java.util.HashMap;
  * this class sets admin for school, adds a class to the map of classes creates new levels if two or more classes have the same level
  */
 
-public class SchoolControl
-{
+public class SchoolControl {
     private Admin admin;
-    private ArrayList<Sclass> schoolClasses = new ArrayList<>();
+    ArrayList<Sclass> classes = new ArrayList<>();
     private ArrayList<Instructor> instructors = new ArrayList<>();
     private HashMap<Level, ArrayList<Sclass>> sclasses = new HashMap<>(); ///each integer is a level of classes[1-12], in each there is an arrayList to be different classes of different sections with the same level
 
     /**
      * constructor
+     *
      * @param admin
      * @param sclasses
      */
-    public SchoolControl(Admin admin,  HashMap<Level, ArrayList<Sclass>> sclasses) {
+    public SchoolControl(Admin admin, HashMap<Level, ArrayList<Sclass>> sclasses) {
 
-       this.admin = new Admin(admin);
+        this.admin = new Admin(admin);
+
 
         this.sclasses = sclasses;
 
@@ -28,28 +30,36 @@ public class SchoolControl
 
     /**
      * copy constructor
+     *
      * @param admin
-     * @param schoolClasses
      * @param instructors
      */
-    public SchoolControl(Admin admin, ArrayList<Sclass> schoolClasses, ArrayList<Instructor> instructors) {
+    public SchoolControl(Admin admin, ArrayList<Instructor> instructors) {
         this.admin = admin;
-        this.schoolClasses = schoolClasses;
+
         this.instructors = instructors;
     }
 
     /**
      * another copy constructor
+     *
      * @param admin
      */
     public SchoolControl(Admin admin) {
-
         setAdmin(admin);
+
+    }
+    public SchoolControl (Admin admin,Level level ,ArrayList<Sclass> classes){
+        this.admin= admin;
+        for(int i =0; i<12; i++){
+            sclasses.put(level, classes);
+        }
 
     }
 
     /**
      * method to get sclasses map
+     *
      * @return
      */
     public HashMap<Level, ArrayList<Sclass>> getSclasses() {
@@ -58,14 +68,16 @@ public class SchoolControl
 
     /**
      * method to get sclasses map
+     *
      * @param sclasses
      */
-    public void setSclasses(HashMap<Level, ArrayList<Sclass>>sclasses) {
+    public void setSclasses(HashMap<Level, ArrayList<Sclass>> sclasses) {
         this.sclasses = sclasses;
     }
 
     /**
      * method to get admin
+     *
      * @return
      */
     public Admin getAdmin() {
@@ -73,16 +85,18 @@ public class SchoolControl
     }
 
     /**
-     *  method to set the Admin
+     * method to set the Admin
+     *
      * @param admin
      */
 
     public void setAdmin(Admin admin) {
-     this.admin= new Admin(admin);
+        this.admin = new Admin(admin);
     }
 
     /**
      * method to return section of the sclass
+     *
      * @param sclass
      * @return
      */
@@ -93,51 +107,47 @@ public class SchoolControl
 
     /**
      * method to add sclass to the array list of sclasses and if the array list contains already another sclass the section must increment then return it
+     *
      * @param level
      * @param sclass
      */
 
-    public char addClass(Level level ,Sclass sclass){ //getKey
-        for(int i =0; i< 12;i++){ //this for loop fills the map each level with an arrayList (1-12)
-            schoolClasses = new ArrayList<>();
+    public char addClass(Level level, Sclass sclass) { //getKey if level has sth in it it addds new sclass to the array list
+        //if not it creates new arraylist
+        char section = 'a';
+
+
+
+        if (sclasses.containsValue(level)) {
+
+           classes.add(sclass);
+           sclasses.put(level, classes);
+
 
         }
+        else {
+            sclasses.get(level).add(sclass);
 
-        schoolClasses.add(sclass);
-        sclasses.put(level, schoolClasses);
-
-
-        return (char)(getSection(sclass)+ schoolClasses.size()-1);
-
+        }
+        return section+= (sclasses.get(level).size())-1;
     }
 
     /**
      * method to return the level
+     *
      * @param sclass
      * @return
      */
-    public int getLevel(Sclass sclass){
+    public Level getLevel(Sclass sclass) {
         return sclass.getLevel();
     }
 
-    /**
-     * method to set level
-     * @param sclass
-     */
-    public void setLevel(Sclass sclass){
-      sclass.getLevel();
-    }
 
-    /**
-     * method to set the array list of classes
-     * @param schoolClasses
-     */
-    public void setSchoolClasses(ArrayList<Sclass> schoolClasses) {
-        this.schoolClasses = schoolClasses;
-    }
+
 
     /**
      * method to set the arraylist of instructors
+     *
      * @param instructors
      */
     public void setInstructors(ArrayList<Instructor> instructors) {
@@ -146,9 +156,10 @@ public class SchoolControl
 
     /**
      * method to add instructor to the array list of the instructor
+     *
      * @param instructor
      */
-    public void addInstructor(Instructor instructor){
+    public void addInstructor(Instructor instructor) {
         instructors.add(instructor);
 
 
@@ -156,6 +167,7 @@ public class SchoolControl
 
     /**
      * method to return the array list of the instructors
+     *
      * @return
      */
 
@@ -163,21 +175,13 @@ public class SchoolControl
         return instructors;
     }
 
-    /**
-     * method to return the array list of sclasses
-     * @return
-     */
-
-    public ArrayList<Sclass> getSchoolClasses() {
-        return schoolClasses;
-    }
 
 }
 
 /**
- *  enum of levels of classes from 1 to 12
+ * enum of levels of classes from 1 to 12
  */
-enum Level{
+enum Level {
     level1,
     level2,
     level3,
