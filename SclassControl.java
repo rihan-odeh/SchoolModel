@@ -1,9 +1,6 @@
 package schoolmodel;
 
-import java.util.ArrayList;
-
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 /**
  * sclass control is to have methods that assign some variables.
@@ -12,6 +9,9 @@ public class SclassControl {
     private ArrayList<Student> students ;
     private Sclass sclass;
     private SchoolControl schoolControl;
+   // private HashMap<Lecture, Double> coursesMarks = new HashMap<>();  //this hashmap stores every lecture with its grade
+
+
 
     /**
      * constructor
@@ -94,6 +94,12 @@ public class SclassControl {
         this.sclass = sclass;
     }
 
+
+    /*public void setCoursesMarks(HashMap<Lecture, Double> map) {
+        for(int i=0; i<students.size(); i++){
+            coursesMarks.put(map., map.get(i));
+    }}*/
+
     /**
      *
      * @return school control object
@@ -143,17 +149,17 @@ public class SclassControl {
     /**
      * method to assign manager randomly
      */
-    public void assignManager() {
+   /* public Instructor assignManager() {
 
         int rand = new Random().nextInt(schoolControl.getInstructors().size());
 
 
 
-        sclass.setClassManager(schoolControl.getInstructors().get(rand));
+        return (schoolControl.getInstructors().get(rand));
 
 
 
-    }
+    }*/
 
     /**
      *  method to return manager of this sclass
@@ -169,14 +175,19 @@ public class SclassControl {
      * @return
      */
 
-    public Student assignManagerAssistant() {
-
-        double max =  Collections.max(sclass.getMarks());
+   public Student assignManagerAssistant() {
+       double max=sclass.getHighestAve();
         for (int i = 0; i < students.size(); i++) {
            if (students.get(i).getAverage() == max) {
-             return  students.get(i).getStudent(max);
+             return  students.get(i);
             }
         }
-        return new Student();
+        return null;
     }
+
+
+
+
+
 }
+

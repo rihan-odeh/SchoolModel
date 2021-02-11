@@ -5,51 +5,100 @@
  */
 package schoolmodel;
 
-import java.util.ArrayList;
+
+import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * student class inherits from person class 
+ * student class inherits from person class
+ *
  * @author ro1
  */
-public class Student extends Person{
+public class Student extends Person {
     private Sclass sc;
-    private ArrayList<Double> marksList;
+    private HashMap<Lecture, Double> coursesMarks = new HashMap<>();  //this hashmap stores every lecture with its grade
+
+
+
     /**
      * constructor that invokes default constructor in superclass, and pass Sclass as parameter
-     * @param sc 
+     *
+     * @param sc
      */
-    public Student(Sclass sc){
-       super();
-      
-        this.sc= sc;
-        
+    public Student(Sclass sc) {
+        super();
+
+        this.sc = sc;
+
     }
-    public Student(){
+
+
+    /**
+     * copy constructor
+     *
+     * @param Id
+     * @param FirstName
+     * @param LastName
+     * @param DateOfBirth
+     * @param gender
+     * @param SC
+     */
+    public Student(long Id, String FirstName, String LastName, Date DateOfBirth, Gender gender, Sclass SC) {
+        super(Id, FirstName, LastName, DateOfBirth, gender);
+        this.sc = SC;
+    }
+
+    public Student(long Id, String name, Date DateOfBirth, Gender gender, Sclass SC) {
+        super(Id, name, DateOfBirth, gender);
+        this.sc = SC;
+    }
+
+    /**
+     * copy constructor
+     *
+     * @param Id
+     * @param name
+     * @param DateOfBirth
+     * @param gender
+     */
+    public Student(long Id, String name, Date DateOfBirth, Gender gender) {
+        super(Id, name, DateOfBirth, gender);
+    }
+
+    /**
+     * default constructor
+     */
+    public Student() {
         super();
     }
 
-    public Student(long Id, String FirstName, String LastName, Date DateOfBirth, Gender gender, Sclass sc, ArrayList<Double> mark) {
-        super(Id, FirstName, LastName, DateOfBirth, gender);
-        this.sc = sc;
-        this.marksList = mark;
+    /**
+     * constructor with student object
+     *
+     * @param student
+     */
+    public Student(Student student) {
+        super(student.getId(), student.getName(), student.getDateOfBirth(), student.getGender());
     }
 
-    public Student(long id, String name, Date dateOfBirth, Gender gender, Sclass sc, ArrayList<Double> mark) {
+    public Student(long id, String name, Date dateOfBirth, Gender gender, Sclass sc, HashMap<Lecture, Double> marks) {
         super(id, name, dateOfBirth, gender);
         this.sc = sc;
-        this.marksList = mark;
+        this.coursesMarks = marks;
     }
 
-    public Student(long Id, String FirstName, String LastName, Date DateOfBirth, Gender gender, ArrayList<Double> mark) {
+    public Student(long Id, String FirstName, String LastName, Date DateOfBirth, Gender gender, double mark , Lecture lecture) {
         super(Id, FirstName, LastName, DateOfBirth, gender);
-        this.marksList = mark;
+        this.coursesMarks.put(lecture, mark);
     }
 
-    public Student(Sclass sc, ArrayList<Double> mark) {
+    public Student(Sclass sc, HashMap<Lecture, Double> marks) {
         this.sc = sc;
-        this.marksList = mark;
+        this.coursesMarks = marks;
     }
+
 
     public Sclass getSc() {
         return sc;
@@ -59,73 +108,46 @@ public class Student extends Person{
         this.sc = sc;
     }
 
-    public ArrayList<Double> getMark() {
-        return marksList;
+    public HashMap<Lecture, Double> getMark() {
+        return coursesMarks;
     }
 
-    public void setMark(ArrayList<Double> mark) {
-        this.marksList = mark;
-    }
-    public void addMark(double mark){
-        marksList.add(mark);
+    public void setMark(HashMap<Lecture, Double> marks) {
+        this.coursesMarks = marks;
     }
 
-    /**
-     * constructor with student object
-     * @param student 
-     */
-    public Student(Student student){
-        super(student.getId(), student.getName(), student.getDateOfBirth(), student.getGender());
+    public void addMark(Lecture lecture, double mark) {
+        coursesMarks.put(lecture, mark);
     }
-    /**
-     *  copy constructor
-     * @param Id
-     * @param FirstName
-     * @param LastName
-     * @param DateOfBirth
-     * @param gender
-     * @param SC 
-     */
-    public Student(long Id, String FirstName,String LastName, Date DateOfBirth,  Gender gender, Sclass SC ) {
-    super(Id, FirstName, LastName, DateOfBirth, gender);
-    this.sc = SC;
-    }
-    public Student(long Id, String name, Date DateOfBirth,  Gender gender, Sclass SC ) {
-        super(Id, name, DateOfBirth, gender);
-        this.sc = SC;
-    }
-    /**
-     * copy constructor
-     * @param Id
-     * @param FirstName
-     * @param LastName
-     * @param DateOfBirth
-     * @param gender 
-     */
-    public Student(long Id, String FirstName,String LastName, Date DateOfBirth,  Gender gender ) {
-        super(Id, FirstName, LastName, DateOfBirth, gender);
-    }
+
     /**
      * assigns value to Sclass
-     * @param sc 
+     *
+     * @param sc
      */
-    public void setSClass(Sclass sc){
+    public void setSClass(Sclass sc) {
         this.sc = sc;
     }
 
 
-    public double getAverage(){
-        double sum= 0;
-        for(int i=0 ;i< marksList.size(); i++){
-            sum+= marksList.get(i);
+    public double getAverage() { //send these marks to sclass
+
+        double sum = 0;
+        for (Map.Entry<Lecture, Double> entry : coursesMarks.entrySet()) {
+            sum += entry.getValue();
         }
-        return sum/ marksList.size();
-    }
-    public Student getStudent(double average){
-        Student newStudent;
-        if(getAverage()== average){
-          return  newStudent= new Student(this.getId(), this.getName(), this.getDateOfBirth(),this.getGender(), this.getSc());
-        }return new Student();
+        return (sum / coursesMarks.size());
     }
 
+    public void setCoursesMarks(Lecture lecture, double mark) {
+        coursesMarks.put(lecture, mark);
+    }
+
+    public double getCourseMark(Lecture lecture) {
+        return coursesMarks.get(lecture);
+    }
+
+    public HashMap<Lecture, Double> getCoursesMarks() {
+        return coursesMarks;
+    }
 }
