@@ -49,9 +49,10 @@ public class SchoolControl {
         setAdmin(admin);
 
     }
-    public SchoolControl (Admin admin,Level level ,ArrayList<Sclass> classes){
-        this.admin= admin;
-        for(int i =0; i<12; i++){
+
+    public SchoolControl(Admin admin, Level level, ArrayList<Sclass> classes) {
+        this.admin = admin;
+        for (int i = 0; i < 12; i++) {
             sclasses.put(level, classes);
         }
 
@@ -117,19 +118,17 @@ public class SchoolControl {
         char section = 'a';
 
 
+        if (!sclasses.containsKey(level)) {
 
-        if (sclasses.containsValue(level)) {
-
-           classes.add(sclass);
-           sclasses.put(level, classes);
+            classes.add(sclass);
+            sclasses.put(level, classes);
 
 
-        }
-        else {
+        } else {
             sclasses.get(level).add(sclass);
 
         }
-        return section+= (sclasses.get(level).size())-1;
+        return section += (sclasses.get(level).size()) - 1;
     }
 
     /**
@@ -141,8 +140,6 @@ public class SchoolControl {
     public Level getLevel(Sclass sclass) {
         return sclass.getLevel();
     }
-
-
 
 
     /**
