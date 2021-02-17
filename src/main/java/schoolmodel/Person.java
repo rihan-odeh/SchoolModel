@@ -112,8 +112,8 @@ public class Person {
     * 
     * @return id
     */
-   public long getId(){
-       return idGenerated.get();
+   public  long getId(){
+       return this.id;
    }
 
    /**

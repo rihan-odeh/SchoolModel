@@ -34,7 +34,7 @@ public class SchoolModel {
         Book book = new Book( "AAAA", "dkmls", 154, 2001);
         System.out.println(book.getId());
         Book book1 = new Book( "Agggg", "dkmls", 154, 2001);
-        System.out.println(book1.getId());
+        System.out.println(" book"+book1.getId());
         ArrayList<Book> books = new ArrayList<>();
 
         books.add(book);
@@ -49,20 +49,20 @@ public class SchoolModel {
         SClass sclass = new SClass( 254, books, instructor);
         System.out.println(sclass.getId());
         Student student1 = new Student( "rihanodeh", date, Gender.Female);
-        System.out.println(student1.getId());
+        System.out.println("s1" + student1.getId());
         student1.setSc(sclass);
       //  System.out.println(sclass.getId());
 
 
         Lecture lecture = new Lecture( "Math",sclass, book, periods);
         lecture.setsC(sclass);
-        System.out.println(lecture.getId());
+       // System.out.println(lecture.getId());
 
         Lecture lecture1 = new Lecture( "Science", sclass,book, periods);
         System.out.println(lecture1.getId());
         lecture1.setsC(sclass);
         Lecture lecture3 = new Lecture( "CS", sclass, book, periods);
-        System.out.println(lecture3.getId());
+       // System.out.println(lecture3.getId());
 
 
         marks3.put(lecture3, 100.0);
@@ -76,7 +76,7 @@ public class SchoolModel {
 
 
         Student student2 = new Student( "ro", date, Gender.Male);
-        System.out.println(student2.getId());
+        System.out.println("s2"+student2.getId());
 
         Map<Lecture, Double> marks4 = new HashMap<>();
         marks4.put(lecture, 80.0);
@@ -86,7 +86,7 @@ public class SchoolModel {
 
         student2.setCoursesMarks(marks4);
         students.add(student2);
-
+        System.out.println("lecture" +lecture3.getId());
         Map<Lecture, Double> marks5 = new HashMap<>();
         marks4.put(lecture, 70.0);
         marks4.put(lecture1, 49.0);
@@ -94,7 +94,7 @@ public class SchoolModel {
         student2.setSc(sclass);
        // System.out.println(student2.getAverage());
         Student student3 = new Student( "reeeoddd", date, Gender.Male);
-        System.out.println(student3.getId());
+        System.out.println("s3"+student3.getId());
         student3.setCoursesMarks(marks4);
         students.add(student3);
 
@@ -122,7 +122,7 @@ public class SchoolModel {
         // sClasses.add(SClass3);
       //   sClasses.add(SClass5);
         SClass SClass5 = new SClass(table ,1254, books, instructor, students, Level.level4);
-       // System.out.println(SClass5.getId());
+        System.out.println("sc" +SClass5.getId());
 
         SchoolControl schoolControl = new SchoolControl(admin);
        // schoolControl.setAdmin(admin);
@@ -179,7 +179,7 @@ public class SchoolModel {
         school.addClass(SClass9);*/
         //System.out.println(school.getInstructors());
         //System.out.println(school.getAdmin());
-        System.out.println(school.mapToJson());
+        System.out.println(lecture.toJson());
 
     }
 
