@@ -3,42 +3,60 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package schoolmodel;
-import java.util.Date;
+package ps.school.model;
 
+import org.json.simple.JSONObject;
+
+import java.util.Date;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 /**
- *
  * @author ro1
  * /**
- * Admin class inherits from Person, the admin is one person so the no- argument constructor 
- * gives default information 
+ * Admin class inherits from Person, the admin is one person so the no- argument constructor
+ * gives default information
  */
-public class Admin extends Person{ 
-   /**
-    * default constructor that invokes default constructor in superclass
-    */ 
-    public Admin(){
-      super();
-        
-    }
+public class Admin extends Person {
+    private static AtomicInteger id = new AtomicInteger();
+
     /**
-     * constructor that assigns values to the attributes 
-     * @param id
+     * default constructor that invokes default constructor in superclass
+     */
+    public Admin() {
+        super();
+
+    }
+
+    /**
+     * constructor that assigns values to the attributes
+     *
      * @param firstName
      * @param lastName
      * @param dateOfBirth
-     * @param gender 
+     * @param gender
      */
-    public Admin(long id,String firstName, String lastName, Date dateOfBirth, Gender gender  ){
-        super(id, firstName, lastName, dateOfBirth, gender);
+    public Admin(String firstName, String lastName, Date dateOfBirth, Gender gender) {
+        super(id.incrementAndGet(), firstName, lastName, dateOfBirth, gender);
+
     }
+
+    @Override
+    public JSONObject toJson() {
+        return super.toJson();
+    }
+
+    public Person fromJson(JSONObject jsonObject) {
+        return super.fromJson(jsonObject);
+    }
+
     /**
      * copy constructor
-     * @param admin 
+     *
+     * @param admin
      */
-    public Admin(Admin admin){
-        super(admin.getId(), admin.getName(), admin.getDateOfBirth(), admin.getGender());
+    public Admin(Admin admin) {
+        super(id.decrementAndGet(), admin.getName(), admin.getDateOfBirth(), admin.getGender());
+
     }
 }

@@ -3,96 +3,82 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package schoolmodel;
+package ps.school.model;
+
+import org.json.simple.*;
+import ps.school.utils.JsonUtil;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- *
  * @author ro1 Table class, is a school sceduale with lectures and sClasses
  */
-class Table {
-   private long id;
-   private ArrayList<Lecture>lectures ;
-  private Sclass sclass;
-  /**
-   * constructor assigns values to the attributes
-   * @param id
-   * @param lectures
-   * @param sC 
-   */
-   public Table (long id, ArrayList<Lecture> lectures, Sclass sC){
-       this.id = id; 
-       this.lectures = lectures;
-       this.sclass = sC;
-   }
+public class Table implements JsonInterface<Table> {
+    private static AtomicInteger id = new AtomicInteger();
+    private List lectures;   ////
+    private SClass sclass;  /// arrays and maps
+
+    public Table(ArrayList<Lecture> lectures, SClass sclass) {
+        this.id.incrementAndGet();
+        this.lectures = lectures;
+        this.sclass = sclass;
+    }
+
+    public Table(Object id, Object lectures, Object sClass) {
+        this.id = (AtomicInteger) id;
+        this.lectures = (ArrayList) lectures;
+        this.sclass = (SClass) sClass;
+
+    }
+
+    public long getId() {
+        return id.get();
+    }
+
+    public void setId(long id) {
+        this.id.incrementAndGet();
+    }
+
+    public List<Lecture> getLectures() {
+        return lectures;
+    }
 
     public void setLectures(ArrayList<Lecture> lectures) {
         this.lectures = lectures;
     }
 
-    public Sclass getSclass() {
+    public SClass getSclass() {
         return sclass;
     }
 
-
-    public void setSclass(Sclass sclass) {
+    public void setSclass(SClass sclass) {
         this.sclass = sclass;
     }
-    /**
-    * getters
-    */
-   /**
-    * 
-    * @return id if the table 
-    */
-   public long getId(){
-       return id; 
-   }
-   /**
-    * 
-    * @return lecture in this table
-    */
-    public ArrayList<Lecture> getLectures(){
-        return lectures; 
+
+    @Override
+    public String toString() {
+        return "Table{" + "id= " + id +
+                " lectures=" + lectures +
+                ", sclass=" + sclass +
+                '}';
     }
-    /**
-     * 
-     * @return Sclass in this table
-     */
-    public Sclass getSchoolClass(){
-        return sclass; 
+
+    public JSONObject toJson() {
+        JsonUtil jsonUtil = new JsonUtil();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("Id", id);
+        jsonObject.put("lectures", jsonUtil.toJsonArray(lectures));
+        jsonObject.put("sClass", sclass.toJson());
+
+        return jsonObject;
     }
-    /**
-     * Setters
-     */
-    /**
-     * 
-     * @param Id to be id of the table
-     */
-    public void setId(long Id){
-        this.id = Id; 
+
+    public Table fromJson(JSONObject jsonObject) {
+
+        return new Table(jsonObject.get("Id"), jsonObject.get("lectures"), jsonObject.get("sClass"));
+
     }
-    /**
-     * 
-     * @param lecture to assign it to this table class
-     */
-    public void setLecture(ArrayList<Lecture> lecture){
-        this.lectures = lecture;
-    }
-    public void addLecture(Lecture lecture){
-        lectures.add(lecture);
-    }
-    /**
-     * 
-     * @param Sc to be the Sclass of this table
-     */
-    public void setSClass(Sclass Sc){
-        this.sclass = Sc;
-    }
-    /**
-     * 
-     * @return a string representation of the whole table with its attributes
-     */
 
 }
